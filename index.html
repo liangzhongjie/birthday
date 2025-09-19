@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日快乐祝福</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5c3e6, #b19cd9, #87ceeb);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            position: relative;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            text-align: center;
+            z-index: 10;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            max-width: 80%;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: blink 2s infinite;
+        }
+        
+        .message {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .message span {
+            display: block;
+            margin: 10px 0;
+            animation: blink 3s infinite;
+        }
+        
+        .message span:nth-child(1) { animation-delay: 0.5s; }
+        .message span:nth-child(2) { animation-delay: 1s; }
+        .message span:nth-child(3) { animation-delay: 1.5s; }
+        .message span:nth-child(4) { animation-delay: 2s; }
+        .message span:nth-child(5) { animation-delay: 2.5s; }
+        
+        @keyframes blink {
+            0%, 100% { 
+                opacity: 1;
+                text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff4d88;
+            }
+            50% { 
+                opacity: 0.7;
+                text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff4d88;
+            }
+        }
+        
+        .hearts, .balloons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        .heart, .balloon {
+            position: absolute;
+            opacity: 0.7;
+        }
+        
+        .heart {
+            color: #ff4d88;
+            font-size: 20px;
+            animation: fall 8s linear infinite;
+        }
+        
+        .balloon {
+            width: 40px;
+            height: 50px;
+            border-radius: 50%;
+            animation: float 12s linear infinite;
+        }
+        
+        @keyframes fall {
+            0% {
+                top: -10%;
+                transform: translateX(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                top: 110%;
+                transform: translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                bottom: -10%;
+                transform: translateX(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                bottom: 110%;
+                transform: translateX(70px) rotate(20deg);
+                opacity: 0;
+            }
+        }
+        
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .music-control i {
+            font-size: 24px;
+            color: white;
+        }
+        
+        .cake {
+            margin-top: 20px;
+            font-size: 40px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .message { font-size: 1.2rem; }
+            .container { padding: 20px; max-width: 90%; }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    <div class="balloons" id="balloons"></div>
+    
+    <div class="container">
+        <h1>生日快乐！</h1>
+        <div class="message">
+            <span>在这个特别的日子里，</span>
+            <span>愿所有的快乐、所有的幸福、</span>
+            <span>所有的温馨、所有的好运，</span>
+            <span>都永远围绕在你的身边。</span>
+            <span>祝你生日快乐！</span>
+        </div>
+        <div class="cake">🎂</div>
+    </div>
+    
+    <div class="music-control" id="music-control">
+        <i class="fas fa-music"></i>
+    </div>
+    
+    <audio id="bg-music" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-happy-birthday-to-you-458.mp3" type="audio/mpeg">
+        您的浏览器不支持音频元素。
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 创建飘落的心形
+            function createHearts() {
+                const heartsContainer = document.getElementById('hearts');
+                for (let i = 0; i < 20; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.innerHTML = '❤';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDelay = Math.random() * 5 + 's';
+                    heartsContainer.appendChild(heart);
+                }
+            }
+            
+            // 创建飘浮的气球
+            function createBalloons() {
+                const balloonsContainer = document.getElementById('balloons');
+                const colors = ['#ff6b6b', '#ff8e8e', '#ff5252', '#ff4081', '#e040fb', '#7c4dff', '#536dfe'];
+                
+                for (let i = 0; i < 15; i++) {
+                    const balloon = document.createElement('div');
+                    balloon.classList.add('balloon');
+                    balloon.style.left = Math.random() * 100 + 'vw';
+                    balloon.style.animationDelay = Math.random() * 8 + 's';
+                    balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    balloonsContainer.appendChild(balloon);
+                }
+            }
+            
+            createHearts();
+            createBalloons();
+            
+            // 背景音乐控制
+            const audio = document.getElementById('bg-music');
+            const musicControl = document.getElementById('music-control');
+            let isPlaying = false;
+            
+            // 用户交互后播放音乐
+            function playAudio() {
+                if (!isPlaying) {
+                    audio.play()
+                        .then(() => {
+                            isPlaying = true;
+                            musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+                        })
+                        .catch(error => {
+                            console.log('自动播放被阻止:', error);
+                        });
+                } else {
+                    audio.pause();
+                    isPlaying = false;
+                    musicControl.innerHTML = '<i class="fas fa-music"></i>';
+                }
+            }
+            
+            // 点击页面任意位置播放音乐
+            document.body.addEventListener('click', function() {
+                if (!isPlaying) {
+                    playAudio();
+                }
+            });
+            
+            // 音乐控制按钮
+            musicControl.addEventListener('click', function(e) {
+                e.stopPropagation();
+                playAudio();
+            });
+        });
+    </script>
+</body>
+</html>
